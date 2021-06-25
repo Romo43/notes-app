@@ -1,12 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const passport = require('passport');
 
-router.get('/users/signin',(req,res)=>{
+router.get('/users/signin', (req,res)=>{
     res.render('users/signin.hbs');
 });
 
-router.get('/users/signup',(req,res)=>{
+router.post('/users/signin', passport.authenticate('local', {
+    successRedirect:'/notes',
+    failureRedirect: '/users/signin',
+    failureFlash: true
+}));
+
+router.get('/users/signup', (req,res)=>{
     res.render('users/signup.hbs');
 });
 
